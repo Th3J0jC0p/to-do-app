@@ -1,4 +1,35 @@
 import PropTypes from "prop-types";
+import styled from "styled-components";
+
+const Container = styled.main``;
+
+const ListContainer = styled.ol`
+	list-style: none;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	grid-auto-rows: minmax(100px, auto);
+	grid-gap: 10px;
+	padding: 0;
+	margin: 0;
+	justify-content: stretch;
+	align-items: stretch;
+	margin-top: 10px;
+	width: 100%;
+`;
+
+const ListItem = styled.li`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	text-align: center;
+	transition: all 0.3s ease-in-out;
+	&:hover {
+		cursor: pointer;
+		background-color: rgba(200, 0, 0, 0.6);
+		color: white;
+	}
+`;
 
 function Content({
 	tasks,
@@ -13,48 +44,38 @@ function Content({
 	}
 
 	function handlePropertiesPanel(index) {
-		setPropertiesPanelOpen(previousState => {
-			return {
-				isOpen: true,
-				index: previousState.idOpen ? -1 : index
-			};
-		});
+		setPropertiesPanelOpen(index);
 	}
 
 	function handleTaskElementClick(e, index) {
 		if (e.ctrlKey) {
 			handleTaskRemoval(index);
-			setPropertiesPanelOpen(() => {
-				return {
-					isOpen: false,
-					index: -1
-				};
-			});
+			setPropertiesPanelOpen(-1);
 		} else {
 			handlePropertiesPanel(index);
 		}
 	}
 
 	return (
-		<main className="flex flex-col row-start-2 row-span-4 col-span-4">
-			<ol className="p-2 flex-1 grid grid-cols-3 grid-rows-auto">
+		<Container>
+			<ListContainer>
 				{tasks.map((task, index) => (
-					<li
+					<ListItem
 						key={index}
 						onClick={e => handleTaskElementClick(e, index)}
 					>
 						{task}
-					</li>
+					</ListItem>
 				))}
-			</ol>
-		</main>
+			</ListContainer>
+		</Container>
 	);
 }
 
 Content.propTypes = {
 	tasks: PropTypes.arrayOf(PropTypes.string).isRequired,
 	setTasks: PropTypes.func.isRequired,
-	isPropertiesPanelOpen: PropTypes.object.isRequired,
+	isPropertiesPanelOpen: PropTypes.number.isRequired,
 	setPropertiesPanelOpen: PropTypes.func.isRequired
 };
 
