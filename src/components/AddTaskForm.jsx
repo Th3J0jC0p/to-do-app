@@ -43,23 +43,24 @@ const TextField = styled.input`
 	}
 `;
 
-function AddTaskForm({ tasks, setTasks }) {
+function AddTaskForm({ tasks, setTasks, setPropertiesPanelOpen }) {
 	function handleTaskSubmit(e) {
-		if (task.length > 0) {
+		if (taskName.length > 0) {
+			setPropertiesPanelOpen(-1);
 			e.preventDefault();
-			setTasks([...tasks, task]);
-			setTask("");
+			setTasks([...tasks, { name: taskName, description: "" }]);
+			setTaskName("");
 		}
 	}
 
 	function handleTaskNameInputChange(e) {
 		if (e.target.value.length <= 30 && e.target.value.length >= 0) {
 			console.log(e.target.value);
-			setTask(e.target.value);
+			setTaskName(e.target.value);
 		}
 	}
 
-	const [task, setTask] = useState("");
+	const [taskName, setTaskName] = useState("");
 
 	return (
 		<section>
@@ -67,7 +68,7 @@ function AddTaskForm({ tasks, setTasks }) {
 				<TextField
 					type="text"
 					placeholder="Enter Task"
-					value={task}
+					value={taskName}
 					onChange={e => handleTaskNameInputChange(e)}
 				/>
 				<Button type="submit" value="Submit" />
@@ -77,7 +78,7 @@ function AddTaskForm({ tasks, setTasks }) {
 }
 
 AddTaskForm.propTypes = {
-	tasks: PropTypes.arrayOf(PropTypes.string).isRequired,
+	tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
 	setTasks: PropTypes.func.isRequired
 };
 

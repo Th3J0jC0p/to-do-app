@@ -43,8 +43,13 @@ function Content({
 		setTasks(newTasks);
 	}
 
+	//BUG: Proper panel info not changing when clicking on different task!
+
 	function handlePropertiesPanel(index) {
+		setPropertiesPanelOpen(-1);
+		console.log(index);
 		setPropertiesPanelOpen(index);
+		console.log(isPropertiesPanelOpen);
 	}
 
 	function handleTaskElementClick(e, index) {
@@ -64,7 +69,7 @@ function Content({
 						key={index}
 						onClick={e => handleTaskElementClick(e, index)}
 					>
-						{task}
+						{task.name}
 					</ListItem>
 				))}
 			</ListContainer>
@@ -73,7 +78,7 @@ function Content({
 }
 
 Content.propTypes = {
-	tasks: PropTypes.arrayOf(PropTypes.string).isRequired,
+	tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
 	setTasks: PropTypes.func.isRequired,
 	isPropertiesPanelOpen: PropTypes.number.isRequired,
 	setPropertiesPanelOpen: PropTypes.func.isRequired

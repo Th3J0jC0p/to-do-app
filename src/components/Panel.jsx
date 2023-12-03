@@ -27,7 +27,11 @@ function Panel({
 	return (
 		<Article>
 			<Header>Add a Task:</Header>
-			<AddTaskForm tasks={tasks} setTasks={setTasks} />
+			<AddTaskForm
+				tasks={tasks}
+				setTasks={setTasks}
+				setPropertiesPanelOpen={setPropertiesPanelOpen}
+			/>
 			{isPropertiesPanelOpen != -1 && (
 				<Properties
 					setPropertiesPanelOpen={setPropertiesPanelOpen}
@@ -41,7 +45,7 @@ function Panel({
 }
 
 Panel.propTypes = {
-	tasks: PropTypes.arrayOf(PropTypes.string).isRequired,
+	tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
 	setTasks: PropTypes.func.isRequired,
 	isPropertiesPanelOpen: PropTypes.number,
 	setPropertiesPanelOpen: PropTypes.func.isRequired
